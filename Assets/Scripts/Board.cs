@@ -229,6 +229,8 @@ public class Board : MonoBehaviour
 
     void HandleGoalAchievedEvent() {
         Debug.Log("Goal Acheived");
+        var uiManager = FindObjectOfType<BoardUIManager>();
+        uiManager.showEndRoundCanvas();
     }
 
     private void MarkTilesToBeDestroyed(List<Tile> matchedTiles)

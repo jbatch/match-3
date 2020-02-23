@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return _instance; } }
 
     [Header("Global State")]
-    public int CurrentLevel = 1;
+    public int CurrentLevel;
+    public int CurrentScore;
 
     private void Awake()
     {

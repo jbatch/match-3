@@ -11,7 +11,7 @@ public class GoalManager : MonoBehaviour
   private GameManager gameManager;
 
   private static Dictionary<int, Goal> AllLevelGoals = new Dictionary<int, Goal>() {
-    {1, new Goal(("T1", 10), ("T2", 10))}
+    {1, new Goal(("T1", 5), ("T2", 5))}
   };
 
   public Goal currentGoal;
@@ -30,11 +30,14 @@ public class GoalManager : MonoBehaviour
   public void HandleTileDestroyedEvent(GameObject go)
   {
     var tag = go.tag;
+    gameManager.CurrentScore += 1;
     if (currentGoal.IsGoal(tag))
     {
       currentGoal.IncrementGoal(tag);
       if (currentGoal.AllGoalsAchieved())
       {
+        // I dunno, 10 points for winning
+        gameManager.CurrentScore += 10;
         GoalAchievedEvent.Invoke();
       }
     }
