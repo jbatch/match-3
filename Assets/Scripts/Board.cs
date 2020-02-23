@@ -13,6 +13,7 @@ public class Board : MonoBehaviour
   private bool freefalling = false;
 
   public GoalManager goalManager;
+  public BoardUIManager boardUIManager;
   private GameStateManager gameStateManager;
 
   public enum SwapDirection
@@ -257,6 +258,7 @@ public class Board : MonoBehaviour
   void HandleGoalAchievedEvent()
   {
     Debug.Log("Goal Acheived");
+    boardUIManager.ShowEndRoundScreen();
   }
 
   private void MarkTilesToBeDestroyed(List<Tile> matchedTiles)
