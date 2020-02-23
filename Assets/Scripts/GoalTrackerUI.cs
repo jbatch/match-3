@@ -10,7 +10,6 @@ public class GoalTrackerUI : MonoBehaviour
   public GameObject row3;
 
   private GameObject[] goalRowArray;
-  private GameManager gameManager;
   private GoalManager goalManager;
 
   private Goal currentGoal;
@@ -19,10 +18,9 @@ public class GoalTrackerUI : MonoBehaviour
   void Start()
   {
     goalRowArray = new GameObject[] { row1, row2, row3 };
-    gameManager = FindObjectOfType<GameManager>();
     goalManager = FindObjectOfType<GoalManager>();
 
-    var currentLevel = gameManager.CurrentLevel;
+    var currentLevel = GlobalState.CurrentLevel;
     currentGoal = goalManager.currentGoal;
 
     InitGoalRows(currentGoal);
@@ -46,7 +44,7 @@ public class GoalTrackerUI : MonoBehaviour
     {
       var row = goalRowArray[i];
       var colorIndex = int.Parse(goal.goalTags[i].Substring(1)) - 1;
-      var color = gameManager.colors[colorIndex];
+      var color = GlobalState.colors[colorIndex];
       row.SetActive(true);
       row.transform.Find("GoalSprite").GetComponent<SpriteRenderer>().color = color;
       var required = currentGoal.goalQuantitiesRequired[i];
