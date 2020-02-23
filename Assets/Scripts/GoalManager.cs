@@ -8,6 +8,7 @@ public class GoalManager : MonoBehaviour
 {
 
   public GoalAchievedEvent GoalAchievedEvent;
+  public GoalProgressEvent GoalProgressEvent;
   private GameManager gameManager;
 
   private static Dictionary<int, Goal> AllLevelGoals = new Dictionary<int, Goal>() {
@@ -25,7 +26,7 @@ public class GoalManager : MonoBehaviour
 
   public Goal currentGoal;
 
-  private void Start()
+  private void Awake()
   {
     gameManager = FindObjectOfType<GameManager>();
     currentGoal = AllLevelGoals[gameManager.CurrentLevel];
@@ -35,7 +36,6 @@ public class GoalManager : MonoBehaviour
   {
 
   }
-
 
   public void HandleTileDestroyedEvent(GameObject go)
   {
@@ -48,6 +48,8 @@ public class GoalManager : MonoBehaviour
       {
         gameManager.CurrentScore += 20;
         GoalAchievedEvent.Invoke();
+      } else {
+        GoalProgressEvent.Invoke();
       }
     }
   }
@@ -80,6 +82,9 @@ public class Goal
 
   public void IncrementGoal(string tag)
   {
+    if(AllGoalsAchieved()) {
+      return;
+    }
     var index = Array.IndexOf(goalTags, tag);
     goalQuantitiesCurrent[index]++;
   }
@@ -101,6 +106,12 @@ public class Goal
 
 [System.Serializable]
 public class GoalAchievedEvent : UnityEvent
+{
+
+}
+
+[System.Serializable]
+public class GoalProgressEvent : UnityEvent
 {
 
 }

@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public int CurrentLevel = 1;
     public int CurrentScore = 0;
 
+    public Color[] colors;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
