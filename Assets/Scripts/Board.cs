@@ -71,6 +71,7 @@ public class Board : MonoBehaviour
     // Listen for goal achievment
     this.goalManager.GoalAchievedEvent.AddListener(HandleGoalAchievedEvent);
     gameStateManager = FindObjectOfType<GameStateManager>();
+    gameStateManager.CanInteract = true;
   }
 
   private void InstantiateBoard()

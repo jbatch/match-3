@@ -14,14 +14,14 @@ public class GoalManager : MonoBehaviour
   private static Dictionary<int, Goal> AllLevelGoals = new Dictionary<int, Goal>() {
     {1, new Goal(("T1", 5), ("T2", 5))},
     {2, new Goal(("T2", 10), ("T5", 10))},
-    {3, new Goal(("T3", 20), ("T2", 20))},
-    {4, new Goal(("T1", 30), ("T2", 30))},
-    {5, new Goal(("T3", 40), ("T2", 40))},
-    {6, new Goal(("T3", 50), ("T5", 50))},
-    {7, new Goal(("T1", 60), ("T2", 60))},
-    {8, new Goal(("T3", 70), ("T2", 70))},
-    {9, new Goal(("T1", 80), ("T2", 80))},
-    {10, new Goal(("T1", 90), ("T2", 90))},
+    {3, new Goal(("T3", 15), ("T2", 15))},
+    {4, new Goal(("T1", 20), ("T2", 20))},
+    {5, new Goal(("T3", 10), ("T2", 10), ("T1", 10))},
+    {6, new Goal(("T2", 15), ("T4", 15), ("T1", 15))},
+    {7, new Goal(("T3", 20), ("T2", 20), ("T1", 20))},
+    {8, new Goal(("T4", 25), ("T2", 25), ("T5", 25))},
+    {9, new Goal(("T5", 30), ("T4", 30), ("T1", 30))},
+    {10, new Goal(("T1", 30), ("T2", 30), ("T1", 30))},
   };
 
   public Goal currentGoal;
@@ -44,12 +44,11 @@ public class GoalManager : MonoBehaviour
     {
       gameManager.CurrentScore += 1;
       currentGoal.IncrementGoal(tag);
+      GoalProgressEvent.Invoke();
       if (currentGoal.AllGoalsAchieved())
       {
         gameManager.CurrentScore += 20;
         GoalAchievedEvent.Invoke();
-      } else {
-        GoalProgressEvent.Invoke();
       }
     }
   }
