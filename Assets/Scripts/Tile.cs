@@ -11,14 +11,20 @@ public class Tile : MonoBehaviour
     public (int x, int y) GridPosition { get; set; }
     public bool Visited { get; set; }
     public bool ToBeDestroyed { get; set; }
+    private GameStateManager gameStateManager;
+
 
     // Use this for initialization
     void Start()
     {
         Visited = false;
         ToBeDestroyed = false;
+        
     }
-
+    
+    void Awake() {
+        gameStateManager = FindObjectOfType<GameStateManager>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -52,10 +58,11 @@ public class Tile : MonoBehaviour
 
     public void OnMouseUp()
     {
-        var endDragPosition = Input.mousePosition;
-        var angle = Mathf.Atan2(endDragPosition.y - startDragPosition.y, endDragPosition.x - startDragPosition.x) * Mathf.Rad2Deg;
-
-        HandleSwap(angle);
+        if(gameStateManager.CanInteract) {
+            var endDragPosition = Input.mousePosition;
+            var angle = Mathf.Atan2(endDragPosition.y - startDragPosition.y, endDragPosition.x - startDragPosition.x) * Mathf.Rad2Deg;
+            HandleSwap(angle);
+        }
     }
 
     public string ToPosString()

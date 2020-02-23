@@ -13,6 +13,7 @@ public class Board : MonoBehaviour
   private bool freefalling = false;
 
   public GoalManager goalManager;
+  private GameStateManager gameStateManager;
 
   public enum SwapDirection
   {
@@ -68,6 +69,7 @@ public class Board : MonoBehaviour
     InstantiateBoard();
     // Listen for goal achievment
     this.goalManager.GoalAchievedEvent.AddListener(HandleGoalAchievedEvent);
+    gameStateManager = FindObjectOfType<GameStateManager>();
   }
 
   private void InstantiateBoard()
@@ -128,19 +130,12 @@ public class Board : MonoBehaviour
     bool anyPatternMatched = false;
     foreach (var pattern in patterns.Keys)
     {
-      // Debug.Log("Checking Groups for pattern " + pattern);
       var matchedTiles = CheckMatchAnyGroup(pattern, matches);
       if (matchedTiles != null)
       {
         anyPatternMatched = true;
-        // Debug.Log("Found matched pattern");
         MarkTilesToBeDestroyed(matchedTiles);
       }
-    }
-    if (anyPatternMatched)
-    {
-      freefalling = true;
-      InvokeRepeating("CheckFreeFall", 0.3f, 0.3f);
     }
     return anyPatternMatched;
   }
@@ -152,8 +147,13 @@ public class Board : MonoBehaviour
     if (!anyPatternMatched)
     {
       Swap(tile, direction);
+      gameStateManager.CanInteract = true;
     }
-
+    else
+    {
+      freefalling = true;
+      InvokeRepeating("CheckFreeFall", 0.3f, 0.3f);
+    }
   }
 
   void CheckFreeFall()
@@ -161,7 +161,16 @@ public class Board : MonoBehaviour
     if (!freefalling)
     {
       CancelInvoke("CheckFreeFall");
-      CheckForMatches();
+      bool anyMatches = CheckForMatches();
+      if (!anyMatches)
+      {
+        gameStateManager.CanInteract = true;
+      }
+      else
+      {
+        freefalling = true;
+        InvokeRepeating("CheckFreeFall", 0.3f, 0.3f);
+      }
       return;
     }
     bool newFreefalling = false;
@@ -240,6 +249,7 @@ public class Board : MonoBehaviour
 
   void HandleSwapEvent(GameObject tile, SwapDirection direction)
   {
+    gameStateManager.CanInteract = false;
     var tile2 = Swap(tile, direction);
     StartCoroutine(AsyncCheckForMatches(tile2, direction));
   }
