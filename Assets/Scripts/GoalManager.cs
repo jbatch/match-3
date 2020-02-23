@@ -15,10 +15,10 @@ public class GoalManager : MonoBehaviour
     {2, new Goal(("T2", 10), ("T5", 10))},
     {3, new Goal(("T3", 20), ("T2", 20))},
     {4, new Goal(("T1", 30), ("T2", 30))},
-    {5, new Goal(("T1", 40), ("T2", 40))},
-    {6, new Goal(("T1", 50), ("T2", 50))},
+    {5, new Goal(("T3", 40), ("T2", 40))},
+    {6, new Goal(("T3", 50), ("T5", 50))},
     {7, new Goal(("T1", 60), ("T2", 60))},
-    {8, new Goal(("T1", 70), ("T2", 70))},
+    {8, new Goal(("T3", 70), ("T2", 70))},
     {9, new Goal(("T1", 80), ("T2", 80))},
     {10, new Goal(("T1", 90), ("T2", 90))},
   };

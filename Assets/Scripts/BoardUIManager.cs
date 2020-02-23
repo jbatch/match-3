@@ -34,6 +34,7 @@ public class BoardUIManager : MonoBehaviour
     }
 
     public void ContinueClicked() {
+        Debug.Log("Continnue called");
         var gameManager = FindObjectOfType<GameManager>();
         gameManager.CurrentLevel += 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
