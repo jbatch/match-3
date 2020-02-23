@@ -24,9 +24,8 @@ public class BoardUIManager : MonoBehaviour
     }
 
     public void ShowEndRoundScreen() {
-        var gameManager = FindObjectOfType<GameManager>();
-        var curLevel = gameManager.CurrentLevel;
-        var curScore = gameManager.CurrentScore;
+        var curLevel = GlobalState.CurrentLevel;
+        var curScore = GlobalState.CurrentScore;
         levelText.text = "Level " + (curLevel - 1) + " Completed!";
         scoreText.text = curScore + "pts";
         boardRef.SetActive(false);
@@ -35,11 +34,10 @@ public class BoardUIManager : MonoBehaviour
 
     public void ContinueClicked() {
         Debug.Log("Continnue called");
-        var gameManager = FindObjectOfType<GameManager>();
-        var curLevel = gameManager.CurrentLevel;
-        var levelsUnlocked = gameManager.LevelsUnlocked;
+        var curLevel = GlobalState.CurrentLevel;
+        var levelsUnlocked = GlobalState.LevelsUnlocked;
         if (curLevel + 1 > levelsUnlocked) {
-            gameManager.LevelsUnlocked += 1;
+            GlobalState.incrementLevelsUnlocked();
         }
 
         SceneManager.LoadScene("LevelSelectScene");

@@ -12,9 +12,13 @@ public class LevelSelectManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         var gameManager = FindObjectOfType<GameManager>();
-         var levelsUnlocked = gameManager.LevelsUnlocked;
-         Debug.Log(buttons.LongLength);
+         
+
+    }
+
+    void Awake() {
+         var levelsUnlocked = GlobalState.LevelsUnlocked;
+         Debug.Log(buttons.LongLength + " " + levelsUnlocked);
 
          for (int i = 0; i < buttons.Length; i++)
          {
@@ -25,7 +29,6 @@ public class LevelSelectManager : MonoBehaviour
                  buttons[i].interactable = false;
              }
          }
-
     }
 
     // Update is called once per frame
@@ -35,8 +38,7 @@ public class LevelSelectManager : MonoBehaviour
     }
 
     public void selectLevel(int level) {
-        var gameManager = FindObjectOfType<GameManager>();
-        gameManager.CurrentLevel = level + 1;
+        GlobalState.CurrentLevel = level + 1;
         SceneManager.LoadScene("GameScene");
     }
 

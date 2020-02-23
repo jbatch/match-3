@@ -9,7 +9,6 @@ public class GoalManager : MonoBehaviour
 
   public GoalAchievedEvent GoalAchievedEvent;
   public GoalProgressEvent GoalProgressEvent;
-  private GameManager gameManager;
 
   private static Dictionary<int, Goal> AllLevelGoals = new Dictionary<int, Goal>() {
     {1, new Goal(("T1", 5), ("T2", 5))},
@@ -28,8 +27,7 @@ public class GoalManager : MonoBehaviour
 
   private void Awake()
   {
-    gameManager = FindObjectOfType<GameManager>();
-    currentGoal = AllLevelGoals[gameManager.CurrentLevel];
+    currentGoal = AllLevelGoals[GlobalState.CurrentLevel];
   }
 
   private void Update()
@@ -42,12 +40,12 @@ public class GoalManager : MonoBehaviour
     var tag = go.tag;
     if (currentGoal.IsGoal(tag))
     {
-      gameManager.CurrentScore += 1;
+      GlobalState.CurrentScore += 1;
       currentGoal.IncrementGoal(tag);
       GoalProgressEvent.Invoke();
       if (currentGoal.AllGoalsAchieved())
       {
-        gameManager.CurrentScore += 20;
+        GlobalState.CurrentScore += 20;
         GoalAchievedEvent.Invoke();
       }
     }
