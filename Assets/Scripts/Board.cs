@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -295,7 +296,9 @@ public class Board : MonoBehaviour
       }
       matchedTiles.Add(t);
     }
-    return matchedTiles;
+    // Uncomment this line to return to the original behaviour where only tiles in the pattern are destroyed.
+    // return matchedTiles;
+    return group.ToList();
   }
 
   private Tile GetTileAtPos(int y, int x)
