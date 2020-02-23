@@ -61,4 +61,5 @@ crashlytics-build.properties
 Dist
 *.png~
 *.kra~
-*.kra-autosave.kra
+*.kra-autosave.kra.vscode
+.vscode/settings.json
