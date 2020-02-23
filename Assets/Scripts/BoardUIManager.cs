@@ -27,7 +27,7 @@ public class BoardUIManager : MonoBehaviour
         var gameManager = FindObjectOfType<GameManager>();
         var curLevel = gameManager.CurrentLevel;
         var curScore = gameManager.CurrentScore;
-        levelText.text = "Level " + curLevel + " Completed!";
+        levelText.text = "Level " + (curLevel - 1) + " Completed!";
         scoreText.text = curScore + "pts";
         boardRef.SetActive(false);
         endRoundCanvas.SetActive(true);
@@ -36,7 +36,12 @@ public class BoardUIManager : MonoBehaviour
     public void ContinueClicked() {
         Debug.Log("Continnue called");
         var gameManager = FindObjectOfType<GameManager>();
-        gameManager.CurrentLevel += 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        var curLevel = gameManager.CurrentLevel;
+        var levelsUnlocked = gameManager.LevelsUnlocked;
+        if (curLevel + 1 > levelsUnlocked) {
+            gameManager.LevelsUnlocked += 1;
+        }
+
+        SceneManager.LoadScene("LevelSelectScene");
     }
 }
