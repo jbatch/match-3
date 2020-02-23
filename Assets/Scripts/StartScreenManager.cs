@@ -45,6 +45,6 @@ public class StartScreenManager : MonoBehaviour
   }
 
   public void startGame() {
-    SceneManager.LoadScene("GameScene");
+    SceneManager.LoadScene("LevelSelectScene");
   }
 }

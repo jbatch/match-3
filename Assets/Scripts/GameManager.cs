@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("Global State")]
     public int CurrentLevel = 1;
     public int CurrentScore = 0;
+    public int LevelsUnlocked = 2;
 
     private void Awake()
     {
