@@ -66,6 +66,8 @@ public class Board : MonoBehaviour
     {
         tiles = new Tile[height, width];
         InstantiateBoard();
+        // Listen for goal achievment
+        this.goalManager.GoalAchievedEvent.AddListener(HandleGoalAchievedEvent);
     }
 
     private void InstantiateBoard()
@@ -109,12 +111,12 @@ public class Board : MonoBehaviour
         bool anyPatternMatched = false;
         foreach (var pattern in patterns.Keys)
         {
-            Debug.Log("Checking Groups for pattern " + pattern);
+            // Debug.Log("Checking Groups for pattern " + pattern);
             var matchedTiles = CheckMatchAnyGroup(pattern, matches);
             if (matchedTiles != null)
             {
                 anyPatternMatched = true;
-                Debug.Log("Found matched pattern");
+                // Debug.Log("Found matched pattern");
                 MarkTilesToBeDestroyed(matchedTiles);
             }
         }
@@ -185,7 +187,7 @@ public class Board : MonoBehaviour
         var i = 0;
         foreach (var group in groups)
         {
-            Debug.Log("Checking Group " + i + " for matching patterns. Size: " + group.Count);
+            // Debug.Log("Checking Group " + i + " for matching patterns. Size: " + group.Count);
             foreach (var checkingTile in group)
             {
                 if (checkingTile.ToBeDestroyed)
@@ -208,7 +210,7 @@ public class Board : MonoBehaviour
         var tile1 = tile.GetComponent<Tile>();
         var (x1, y1) = tile1.GridPosition;
         var (offesetX, offsetY) = VectorFromDirection(direction);
-        Debug.Log("Swapping " + (x1, y1) + " + " + VectorFromDirection(direction));
+        // Debug.Log("Swapping " + (x1, y1) + " + " + VectorFromDirection(direction));
         var (x2, y2) = (x1 + offesetX, y1 + offsetY);
         var tile2 = tiles[y2, x2];
 
@@ -225,6 +227,10 @@ public class Board : MonoBehaviour
         StartCoroutine(AsyncCheckForMatches(tile2, direction));
     }
 
+    void HandleGoalAchievedEvent() {
+        Debug.Log("Goal Acheived");
+    }
+
     private void MarkTilesToBeDestroyed(List<Tile> matchedTiles)
     {
         foreach (var tile in matchedTiles)
@@ -237,21 +243,21 @@ public class Board : MonoBehaviour
 
     private List<Tile> GroupMatchesPattern(Pattern pattern, HashSet<Tile> group, Tile checkingTile)
     {
-        Debug.Log("Checking tile " + checkingTile.ToPosString() + " against pattern " + pattern);
+        // Debug.Log("Checking tile " + checkingTile.ToPosString() + " against pattern " + pattern);
         var offsetsToCheck = patterns[pattern];
         List<Tile> matchedTiles = new List<Tile>();
         matchedTiles.Add(checkingTile);
         var (x, y) = checkingTile.GridPosition;
-        Debug.Log("\tTile has pos ( " + x + ", " + y + " )");
+        // Debug.Log("\tTile has pos ( " + x + ", " + y + " )");
         foreach (var offset in offsetsToCheck)
         {
             var t = GetTileAtPos(y + (int)offset.x, x + (int)offset.y);
             if (t == null)
             {
-                Debug.Log("NULL " + (y + (int)offset.x) + " ," + (x + (int)offset.y));
+                // Debug.Log("NULL " + (y + (int)offset.x) + " ," + (x + (int)offset.y));
                 return null;
             }
-            Debug.Log("\tChecking inner tile ( " + t.GridPosition + " against pattern " + pattern);
+            // Debug.Log("\tChecking inner tile ( " + t.GridPosition + " against pattern " + pattern);
             if (t == null || !group.Contains(t))
             {
                 return null;
