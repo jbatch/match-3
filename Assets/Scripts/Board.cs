@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class Board : MonoBehaviour
@@ -10,6 +11,8 @@ public class Board : MonoBehaviour
     public int width;
     public GameObject[] tilePrefabs;
     private bool freefalling = false;
+
+    public GoalManager goalManager;
 
     public enum SwapDirection
     {
@@ -226,6 +229,7 @@ public class Board : MonoBehaviour
     {
         foreach (var tile in matchedTiles)
         {
+            goalManager.HandleTileDestroyedEvent(tile.gameObject);
             tiles[tile.GridPosition.y, tile.GridPosition.x] = null;
             Destroy(tile.gameObject);
         }

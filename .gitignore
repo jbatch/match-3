@@ -62,3 +62,5 @@ Dist
 *.png~
 *.kra~
 *.kra-autosave.kra
+
+.vscode
