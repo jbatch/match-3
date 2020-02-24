@@ -65,3 +65,6 @@ Dist
 
 .vscode
 
+.DS_Store
+**/.DS_store
+
